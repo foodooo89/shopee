@@ -4,15 +4,17 @@ on:
   workflow_dispatch:
 jobs:
   apk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
       - uses: android-actions/setup-android@v3
-      - run: sdkmanager "ndk;26.1.10909125" "platforms;android-34" "build-tools;34.0.0"
+        with:
+          packages: ''
+      - run: yes | sdkmanager "ndk;26.1.10909125" "platforms;android-34" "build-tools;34.0.0"
       - run: git clone --recursive https://github.com/heiher/hev-socks5-tunnel app/src/main/jni/hev-socks5-tunnel
       - uses: gradle/actions/setup-gradle@v4
         with:
