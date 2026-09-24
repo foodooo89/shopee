@@ -58,7 +58,7 @@ class Socks2Http(private val cfg: ProxyCfg) {
             up = try { openTunnel(cfg, authority) } catch (e: Exception) { o.write(reply(5)); return }
             o.write(reply(0))
 
-            val u = up
+            val u: Socket = up!!
             val t = pool.submit { pump(u, c) }
             pump(c, u)
             t.get()
